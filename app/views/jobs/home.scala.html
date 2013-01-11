@@ -1,0 +1,51 @@
+@(message: String, jobs : List[Job], searchForm: Form[String])
+
+@import helper._
+
+@main("Welcome to Play 2.0") {
+    
+    <h1>@message</h1>
+
+    <form action="@routes.Jobs.search" method="GET">
+        <input type="text" name="filter" id="filter" />
+        <input type="submit" value="Search"/>
+    </form>
+
+    <table class="datatable">
+        <tr>
+            <th>Id</th>
+            <th>jobName</th>
+            <th>jobClass</th>
+            <th>status</th>
+            <th>groupId</th>
+            <th>cron</th>
+            <th>command</th>
+        </tr>
+        @jobs.map { c =>
+            <tr>
+                <td>@c.id</td>
+                <td>@c.jobName</td>
+                <td>@c.jobClass</td>
+                <td>@c.status</td>
+                <td>@c.groupId</td>
+                <td>@c.cron</td>
+                <td>
+                    @helper.form(routes.Jobs.start(c.id), 'style -> "float: left;") {
+                        <input type="submit" value="Start"/>
+                    }
+                    @helper.form(routes.Jobs.reset(c.id), 'style -> "float: left;") {
+                        <input type="submit" value="Reset"/>
+                    }
+                    @helper.form(routes.Jobs.edit(c.id), 'style -> "float: left;") {
+                        <input type="submit" value="Edit"/>
+                    }
+                    @helper.form(routes.Jobs.delete(c.id), 'style -> "float: left;") {
+                        <input type="submit" value="Delete"/>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+
+    <a href="@routes.Jobs.create" style="margin-top: 10px; display: block;">Create new Job</a>
+}

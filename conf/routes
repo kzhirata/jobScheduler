@@ -1,0 +1,26 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+
+GET     /                           controllers.Jobs.home(filter : String ?= "%")
+GET     /job/                       controllers.Jobs.home(filter : String ?= "%")
+GET     /job/search                 controllers.Jobs.search
+GET     /job/edit/:id               controllers.Jobs.edit(id : Long)
+GET     /job/create                 controllers.Jobs.create
+POST    /job/save                   controllers.Jobs.save
+POST    /job/delete/:id             controllers.Jobs.delete(id : Long)
+GET     /job/start/:id              controllers.Jobs.start(id : Long)
+GET     /job/reset/:id              controllers.Jobs.reset(id : Long)
+
+GET     /jobcondition/                       controllers.JobConditions.home(filter : String ?= "%")
+GET     /jobcondition/search                 controllers.JobConditions.search
+GET     /jobcondition/edit/:id               controllers.JobConditions.edit(id : Long)
+GET     /jobcondition/create                 controllers.JobConditions.create
+POST    /jobcondition/save                   controllers.JobConditions.save
+POST    /jobcondition/delete/:id             controllers.JobConditions.delete(id : Long)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+

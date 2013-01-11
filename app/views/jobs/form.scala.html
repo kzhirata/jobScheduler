@@ -1,0 +1,26 @@
+@(message: String, f : Form[Job])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(simpleInput.f) } 
+
+@main(message) {
+
+  <h1>@message</h1>
+  <fieldset style="width: 500px;">
+    @helper.form(routes.Jobs.save) {
+      @inputText(f("id"), '_label -> "Id", 'readonly -> "readonly")
+      @inputText(f("jobName"), '_label -> "jobName")
+      @inputText(f("jobClass"), '_label -> "jobClass")
+      @inputText(f("status"), '_label -> "status")
+      @inputText(f("groupId"), '_label -> "groupId")
+      @inputText(f("cron"), '_label -> "cron")
+      <fieldset style="margin-top: 10px;">
+          <input type="submit" value="Save" />
+          <a href="@routes.Jobs.home("")">Cancel and go home</a>
+      </fieldset>
+    }        
+  </fieldset>
+  
+}
+
