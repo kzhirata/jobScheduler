@@ -1,7 +1,20 @@
-Sample playframework 2.0 application with mybatis-for-scala
+Sample playframework 2.0 JobScheduler application 
 ===========================================================
 
-This is a sample CRUD application using play 2.0 and mybatis for scala beta1
+## Features ##
 
-See http://www.fdmtech.org/2012/03/a-better-example-of-play-framework-2-0-with-mybatis-for-scala-beta
+* Quartz scheduler
+* Akka
+* Actors
+* Fin
+
+### Versions ###
+
+
+## Using ##
+
+
+## Observations ##
+
+
 
