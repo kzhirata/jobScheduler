@@ -8,7 +8,6 @@ import play.api.Play.current
 import play.api.libs.concurrent._
 
 import akka.util.Timeout
-import akka.util.duration._
 import akka.pattern.ask
 import akka.actor.Props
 
@@ -31,6 +30,7 @@ object Global extends GlobalSettings {
       JobStore.findAll().foreach { job =>
         startJob(Option(job))
       }
+      
     }
   }
 
@@ -38,8 +38,8 @@ object Global extends GlobalSettings {
     //メインジョブ起動
     val jobActor = Akka.system.actorOf(Props(new QuartzActor))
     val recv = Akka.system.actorOf(Props(new SpecActors.RecvActor))
-    implicit val timeout = Timeout(5 seconds)
-    val future = (jobActor ? AddCronSchedule(recv, job.get.cron, SpecActors.Execute(job), true))
+    implicit val timeout = Timeout(5)
+    val future = jobActor ? AddCronSchedule(recv, job.get.cron, SpecActors.Execute(job), true)
     JobExecutionContext.put(job.get.jobName, future)        
   }
 

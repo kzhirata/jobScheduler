@@ -8,6 +8,7 @@ import persistence.PersistenceContext._
 import persistence._
 import models._
 import play.api.data.format.Formats._
+import scala.collection.JavaConversions._
 
 object JobConditions extends Controller {
 
@@ -27,7 +28,7 @@ object JobConditions extends Controller {
     withConnection { implicit s =>
       val jobconditions = JobConditionStore search "%" + filter + "%"
 
-      Ok(views.html.jobconditions.home("JobConditions", jobconditions, searchForm))
+      Ok(views.html.jobconditions.home("JobConditions", jobconditions.toList, searchForm))
     }
   }
  

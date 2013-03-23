@@ -9,7 +9,6 @@ import persistence.PersistenceContext._
 import akka.util.Timeout
 import akka.pattern.ask
 import akka.actor._
-import akka.util.duration._
 
 import play.api._
 import play.api.mvc._
@@ -19,7 +18,9 @@ import play.api.data.format.Formats._
 import play.api.libs.json._
 import play.api.libs.iteratee._
 import play.api.libs.concurrent._
+import play.api.libs.concurrent.Execution.Implicits._
 import play.api.Play.current
+import scala.concurrent.duration._
 
 import us.theatr.akka.quartz._
 
@@ -40,7 +41,7 @@ object Jobs extends Controller {
   def home(filter: String = "") = Action {
     withConnection { implicit s =>
       val jobs = JobStore search "%" + filter + "%"
-      Ok(views.html.jobs.home("Jobs", jobs, searchForm))
+      Ok(views.html.jobs.home("Jobs", jobs.toList, searchForm))
 
       //複数のパラメータの場合、このようにPOJOを定義する。
       //      val job = new ParamJob(filter)      
@@ -133,7 +134,7 @@ object Jobs extends Controller {
   def cancel(job: Job) {
     //メインジョブキャンセル
     val future = JobExecutionContext.get(job.jobName)
-    val cancel = future.get.value.get match {
+    val cancel = future.get.value.getOrElse("0") match {
       case Right(AddCronScheduleSuccess(cancel)) => cancel
     }
     cancel.cancel()
@@ -143,7 +144,7 @@ object Jobs extends Controller {
     //メインジョブ起動
     val jobActor = Akka.system.actorOf(Props(new QuartzActor))
     val recv = Akka.system.actorOf(Props(new SpecActors.RecvActor))
-    implicit val timeout = Timeout(5 seconds)
+    implicit val timeout = Timeout(5)
     val future = (jobActor ? AddCronSchedule(recv, job.cron, SpecActors.Execute(Option(job)), true))
     JobExecutionContext.put(job.jobName, future)
   }

@@ -1,7 +1,7 @@
 package context
 
 import scala.collection.mutable._
-import akka.dispatch.Future
+import scala.concurrent.Future
 import play.Logger
 
 object JobExecutionContext {

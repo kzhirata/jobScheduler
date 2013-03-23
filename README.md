@@ -1,4 +1,4 @@
-Sample playframework 2.0 JobScheduler application 
+Sample playframework 2.1 JobScheduler application 
 ===========================================================
 
 ## Features ##
@@ -18,6 +18,3 @@ Sample playframework 2.0 JobScheduler application
     play run
 
 ## Observations ##
-
-
-
