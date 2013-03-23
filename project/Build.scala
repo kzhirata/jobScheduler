@@ -4,8 +4,8 @@ import play.Project._
 
 object ApplicationBuild extends Build {
 
-  val appName         = "jobScheduler21"
-  val appVersion      = "1.0-SNAPSHOT"
+  val appName         = "jobScheduler"
+  val appVersion      = "1.1-SNAPSHOT"
 
   val appDependencies = Seq(
     // Add your project dependencies here,
